@@ -1,13 +1,13 @@
 var ObjectId = require('mongodb').ObjectId;
 
 module.exports = function(app, db) {
-    app.get('/notes', (res) => {
-
-        db.collection('notes').find(() => {
+    app.get('/notes', (req,res) => {
+        db.collection('notes').find({}).toArray((err, results) => {
             if(err) {
                 res.send({ 'error': 'An error has occured!'});
             } else {
-                res.send(item);
+                console.log(results)
+                res.send(results);
             }
          })
 
@@ -45,7 +45,10 @@ module.exports = function(app, db) {
 
     app.post('/notes', (req, res ) => {
         console.log(req.body);
-        const message = {message: req.body.message};
+        const message = {
+            message: req.body.message,
+            date: req.body.date
+        };
         db.collection('notes').insertOne(message, (err, result) => {
             if(err) {
                 res.send({ 'error': 'An error has occured!'});
