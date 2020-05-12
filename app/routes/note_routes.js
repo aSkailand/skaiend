@@ -1,12 +1,23 @@
 var ObjectId = require('mongodb').ObjectId;
 
 module.exports = function(app, db) {
+    app.get('/players', (req, res) => {
+        db.collection('players').find({}).toArray((err, results) => {
+            if(err){
+                res.send({'error':'An error has occured getting players'});
+            }else{
+                console.log(results);
+                res.send(results);
+            }
+        })
+    });
+
     app.get('/notes', (req,res) => {
         db.collection('notes').find({}).toArray((err, results) => {
             if(err) {
                 res.send({ 'error': 'An error has occured!'});
             } else {
-                console.log(results)
+                console.log(results);
                 res.send(results);
             }
          })
@@ -49,13 +60,37 @@ module.exports = function(app, db) {
             message: req.body.message,
             date: req.body.date
         };
-        db.collection('notes').insertOne(message, (err, result) => {
-            if(err) {
-                res.send({ 'error': 'An error has occured!'});
-            } else {
-                console.log(result.ops[0]);
-                res.send(result.ops[0]);
-            }
-         })
+        if(message.message){
+            db.collection('notes').insertOne(message, (err, result) => {
+                if(err) {
+                    res.send({ 'error': 'An error has occured!'});
+                } else {
+                    res.send(result.ops[0]);
+                }
+            })
+        }
+    });
+
+    app.post('/players', (req, res) => {
+        const player = {
+            name: req.body.name,
+            number: req.body.number,
+            position: req.body.position,
+            team: req.body.team
+        };
+
+        if(player.name){
+            db.collection('players').insertOne(player, (err, result) => {
+                if(err){
+                    res.send({'error': 'an error occured adding a new player'});
+                }else {
+                    res.send(result.ops[0]);
+                    console.log(result.ops[0]);
+                    console.log('wii');
+                }
+            })
+        }else{
+            res.send('fuck off');
+        }
     });
 };
