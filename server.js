@@ -7,7 +7,7 @@ const app = express();
 const port = 8000;
 
 var corsOptions = {
-    origin: 'http://167.172.53.222:4680',
+    origin: 'http://167.172.53.222',
     optionsSuccessStatus: 200,
     allowedHeaders: 'Content-Type'
 }
