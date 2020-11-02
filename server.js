@@ -7,7 +7,7 @@ const app = express();
 const port = 8000;
 
 var corsOptions = {
-    origin: 'http://167.172.53.222',
+    origin: 'https://skaiapp.no',
     optionsSuccessStatus: 200,
     allowedHeaders: 'Content-Type'
 }

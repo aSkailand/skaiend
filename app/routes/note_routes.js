@@ -36,7 +36,6 @@ module.exports = function (app, db) {
                     'error': 'An error has occured getting players'
                 });
             } else {
-                console.log(results);
                 res.send(results);
             }
         })
@@ -49,7 +48,6 @@ module.exports = function (app, db) {
                     'error': 'An error has occured!'
                 });
             } else {
-                console.log(results);
                 res.send(results);
             }
         })
@@ -131,10 +129,7 @@ module.exports = function (app, db) {
                         'error': 'an error occured adding a new player'
                     });
                 } else {
-                    res.send(result.ops[0]);
-                    console.log(result.ops[0]);
-                    console.log('wii');
-                }
+                    res.send(result.ops[0]);                }
             })
         } else {
             res.send('fuck off');
